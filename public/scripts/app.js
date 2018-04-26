@@ -1,3 +1,9 @@
+const ENV = require('./app-env');
+const googleClientKey = ENV.GOOGLE_CLIENT_ID;
+const googleClientSecret = ENV.GOOGLE_CLIENT_SECRET;
+
+
+
 $(document).ready(function(){
 
 	$("#signup-form").on("submit", function(event){
