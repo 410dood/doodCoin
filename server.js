@@ -12,10 +12,11 @@ const session = require('express-session');
 const index = require('./app/routes/index');
 const users = require('./app/routes/users');
 const strategies = require('./app/routes/strategies');
+var db;
 mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost/strategy')
-// 	.then(() => console.log('connection succesful'))
-// 	.catch((err) => console.error(err));
+mongoose.connect('mongodb://localhost/doodcoin')
+	.then(() => console.log('connection succesful'))
+	.catch((err) => console.error(err));
 
 // middleware
 app.use(express.static('public'));
@@ -30,13 +31,14 @@ app.use(session({
 	secret:'SuperSecretCookie',
 	cookie:{maxAge:30*60*1000}
 }));
-mongoose.connect('mongodb://localhost/doodCoin');
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', users);
 app.use('/strategies', strategies);
+
+
 
 
 app.get('/', function (req, res) {
@@ -61,13 +63,11 @@ app.post("/signup", function(req, res){
 		res.json(newUserDocument)
 	})
 });
-
 app.get("/profile", function(req, res){
 	User.findOne({_id : req.session.userId}, function(err, userDocument){
 		res.render('profile', {user : userDocument})
 	})
 })
-
 app.post("/sessions", function(req, res){
 	User.authenticate(req.body.email, req.body.password, function(err, existingUserDocument){
 		if (err) console.log("error is " + err)
@@ -75,16 +75,10 @@ app.post("/sessions", function(req, res){
 		res.json(existingUserDocument)
 	})
 })
-
 // login route with placeholder response
 app.get('/login', function (req, res) {
   res.render('login');
 });
-
-// listen on port 3000
-// app.listen(3000, function () {
-//   console.log('server started on locahost:3000');
-// });
 
 app.listen(app.get('port'), () => {
 	console.log(`✅ PORT: ${app.get('port')} 🌟`)
