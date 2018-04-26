@@ -13,6 +13,9 @@ const cookieParser = require("cookie-parser");
 //const User = require('./models/user');
 //const ENV = require('./app-env');
 const User = require('./app/models/user')
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+const port = process.env.PORT || 8050;
 
 
 // Mongoose Setup
@@ -21,8 +24,6 @@ mongoose.connect('mongodb://localhost:27017/google-authentication-app');
 // Middleware
 app.use(cookieParser());
 //app.use(expressSession({ secret: 'mySecretKey' }));
-//app.use(passport.initialize());
-//app.use(passport.session());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,11 +31,41 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
 
-///////////////////////
+// Add session support
+app.use(session({
+	secret: process.env.SESSION_SECRET || 'default_session_secret',
+	resave: false,
+	saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+passport.serializeUser((user, done) => {
+	done(null, user);
+});
 
-const port = process.env.PORT || 8050;
+passport.deserializeUser((userDataFromCookie, done) => {
+	done(null, userDataFromCookie);
+});
+
+// Checks if a user is logged in
+const accessProtectionMiddleware = (req, res, next) => {
+	if (req.isAuthenticated()) {
+		next();
+	} else {
+		res.status(403).json({
+			message: 'must be logged in to continue',
+		});
+	}
+};
+
+// A secret endpoint accessible only to logged-in users
+app.get('/protected', accessProtectionMiddleware, (req, res) => {
+	res.json({
+		message: 'You have accessed the protected endpoint!',
+		yourUserInfo: req.user,
+	});
+});
 
 // Set up passport strategy
 passport.use(new GoogleStrategy(
@@ -50,7 +81,6 @@ passport.use(new GoogleStrategy(
 		return cb(null, profile);
 	},
 ));
-
 // This is where users point their browsers in order to get logged in
 // This is also where Google sends back information to our app once a user authenticates with Google
 app.get('/auth/google/callback',
@@ -59,9 +89,15 @@ app.get('/auth/google/callback',
 		console.log('wooo we authenticated, here is our user object:', req.user);
 		// Send the user data back to the browser for now
 		res.json(req.user);
+		res.redirect('/strategies');
 	}
 );
-
+app.get('/protected', accessProtectionMiddleware, (req, res) => {
+	res.json({
+		message: 'You have accessed the protected endpoint!',
+		yourUserInfo: req.user,
+	});
+});
 
 // Start server
 const server = app.listen(port, function () {
