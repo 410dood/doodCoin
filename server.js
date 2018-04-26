@@ -67,6 +67,7 @@ app.post("/signup", function(req, res){
 	})
 });
 
+
 app.get("/profile", function(req, res){
 	User.findOne({_id : req.session.userId}, function(err, userDocument){
 		res.render('profile', {user : userDocument})
@@ -84,6 +85,16 @@ app.post("/sessions", function(req, res){
 // login route with placeholder response
 app.get('/login', function (req, res) {
   res.render('login');
+});
+
+// login route with placeholder response
+app.get('/strategies', function (req, res) {
+	res.render('strategies');
+});
+
+// login route with placeholder response
+app.get('/users', function (req, res) {
+	res.render('users');
 });
 
 // listen on port 3000
