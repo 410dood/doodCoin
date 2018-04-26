@@ -1,37 +1,32 @@
 const ejsLint = require('ejs-lint');
-const express = require('express'),
-	app = express(),
-	bodyParser = require('body-parser'),
-	mongoose = require('mongoose');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const User = require('./app/models/user');
+const session = require('express-session');
+const index = require('./app/routes/index');
+const users = require('./app/routes/users');
+const strategies = require('./app/routes/strategies');
 mongoose.Promise = global.Promise;
-
-var User = require('./app/models/user')
-var session = require('express-session')
-
-mongoose.connect('mongodb://localhost/strategy')
-	.then(() => console.log('connection succesful'))
-	.catch((err) => console.error(err));
-
-var index = require('./app/routes/index');
-var users = require('./app/routes/users');
-var strategies = require('./app/routes/strategies');
+// mongoose.connect('mongodb://localhost/strategy')
+// 	.then(() => console.log('connection succesful'))
+// 	.catch((err) => console.error(err));
 
 // middleware
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 3000)
 
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
-
 app.use(session({
-	saveUnitialized : true,
-	resave:true,
+	saveUnitialized: true,
+	resave: true,
 	secret:'SuperSecretCookie',
 	cookie:{maxAge:30*60*1000}
 }));

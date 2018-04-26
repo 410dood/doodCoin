@@ -1,3 +1,5 @@
+console.log('app.js page loaded');
+
 $(document).ready(function(){
 
 	$("#signup-form").on("submit", function(event){
