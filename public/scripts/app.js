@@ -40,7 +40,7 @@ $(document).ready(function(){
 			method : "POST",
 			data : formData,
 			success : function(response){
-				window.location = "/profile"
+				window.location = "/views/profile"
 			}
 		})
 

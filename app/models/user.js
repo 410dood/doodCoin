@@ -41,6 +41,8 @@ global.USERNAME=foundUser;
     // throw error if can't find user
     if (!foundUser) {
       console.log('No user with email ' + email);
+      $("h1").append(" is not a user email")
+
       callback("Error: no user found", null);  // better error structures are available, but a string is good enough for now
     // if we found a user, check if password is correct
     } else if (foundUser.checkPassword(password)) {
