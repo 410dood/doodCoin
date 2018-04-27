@@ -21,7 +21,7 @@ $(document).ready(function(){
 			method : "POST",
 			data : formData,
 			success : function(response){
-				$("h1").append(response.email + " is now a user email")
+				$("h2").append(response.email + " is now a user email")
 			}
 		})
 
