@@ -1,5 +1,5 @@
-var mongoose = require('mongoose'),
-bcrypt = require('bcrypt');
+var mongoose = require('mongoose')
+var bcrypt = require('bcrypt');
 
 var Schema = mongoose.Schema;
 
@@ -18,8 +18,8 @@ UserSchema.statics.createSecure = function(email, password, callback){
 
 			//once we have a encrypted hash, we can store that in our database
 			UserModel.create({
-				email : email,
-				passwordDigest : hash
+				email: email,
+				passwordDigest: hash
 			}, callback);
 		})
 	})
@@ -37,7 +37,7 @@ UserSchema.statics.authenticate = function (email, password, callback) {
   this.findOne({email: email}, function (err, foundUser) {
     console.log("is this it")
     console.log(foundUser);
-global.USERNAME=foundUser;
+    global.USERNAME=foundUser;
     // throw error if can't find user
     if (!foundUser) {
       console.log('No user with email ' + email);
