@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
 	email: String,
-	passwordDigest : String
+	passwordDigest: String
 })
 
 UserSchema.statics.createSecure = function(email, password, callback){
