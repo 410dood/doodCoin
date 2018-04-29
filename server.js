@@ -1,18 +1,19 @@
 
-const ejsLint = require('ejs-lint');
+
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
-const favicon = require('serve-favicon');
+//const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const User = require('./app/models/user');
 const session = require('express-session');
 const index = require('./app/routes/index');
 const users = require('./app/routes/users');
 const strategies = require('./app/routes/strategies');
-var db;
+const db;
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/doodcoin')
 	.then(() => console.log('doodcoin connection succesful'))
