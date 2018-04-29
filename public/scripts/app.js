@@ -1,8 +1,6 @@
-console.log('app.js page loaded');
+$(document).ready(function () {
 
-$(document).ready(function(){
-
-	$("#signup-form").on("submit", function(event){
+	$('#signup-form').on('submit', function (event) {
 
 		event.preventDefault();
 
@@ -10,41 +8,41 @@ $(document).ready(function(){
 		// the post route /signup
 
 		var formData = {
-			email : $("#email-input").val(),
-			password : $("#pw-input").val()
-		}
+			email: $('#email-input').val(),
+			password: $('#pw-input').val()
+		};
 
-		console.log(formData)
+		console.log(formData);
 
 		$.ajax({
-			url  : "/signup",
-			method : "POST",
-			data : formData,
-			success : function(response){
-				$("h2").append(response.email + " is now a user email")
+			url: '/signup',
+			method: 'POST',
+			data: formData,
+			success: function (response) {
+				$('h1').append(response.email + ' is now a user email');
 			}
-		})
+		});
 
-	})
+	});
 
-	$("#login-form").on("submit", function(event){
+	$('#login-form').on('submit', function (event) {
 		event.preventDefault();
 
 		var formData = {
-			email : $("#email-input").val(),
-			password : $("#pw-input").val()
-		}
+			email: $('#email-input').val(),
+			password: $('#pw-input').val()
+		};
 
-		console.log(formData)
+		console.log(formData);
 
 		$.ajax({
-			url  : "/sessions",
-			method : "POST",
-			data : formData,
-			success : function(response){
-				window.location = "/profile"
+			url: '/sessions',
+			method: 'POST',
+			data: formData,
+			success: function (response) {
+				window.location = '/profile';
 			}
-		})
+		});
 
-	})
-})
+	});
+});
