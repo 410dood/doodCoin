@@ -1,11 +1,17 @@
 var mongoose = require('mongoose');
 
-var StrategySchema = new mongoose.Schema({
+var Schema = mongoose.Schema;
+
+var StrategySchema = new Schema({
 	name: String,
 	variables: String,
 	currency: String,
 	coin: Number,
-	updated_at: { type: Date, default: Date.now },
+	updated_at: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Strategy', StrategySchema);
+
+var Strategy =mongoose.model('Strategy', StrategySchema);
+//module.exports = mongoose.model('Strategy', StrategySchema);
+
+module.exports = Strategy;

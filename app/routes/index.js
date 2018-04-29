@@ -11,8 +11,8 @@ if (process.env.NODE_ENV == 'production') {
 	mongoose.connect('mongodb://localhost/doodcoin');
 }
 
-module.exports.User = require('./users');
-module.exports.User = require('./strategies');
+module.exports.User = require('./users.js');
+module.exports.User = require('./strategies.js');
 
 
 

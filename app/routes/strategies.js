@@ -39,4 +39,25 @@ router.post('/delete/:id', function(req, res, next) {
 	strategy.delete(req, res);
 });
 
+// // Get all strategys
+// router.get('/', strategy.list);
+
+// // Get single strategy by id
+// router.get('/show/:id', strategy.show);
+
+// // Create strategy
+// router.get('/create', strategy.create);
+
+// // Save strategy
+// router.post('/save', strategy.save);
+
+// // Edit strategy
+// router.get('/edit/:id', strategy.edit);
+
+// // Edit update
+// router.post('/update/:id', strategy.update);
+
+// // Edit update
+// router.post('/delete/:id', strategy.delete);
+
 module.exports = router;

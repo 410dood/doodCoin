@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Strategy = require('../models/Strategy');
+//var Strategy = mongoose.model('Strategy');
 
 var strategyController = {};
 
