@@ -13,11 +13,24 @@ const session = require('express-session');
 const index = require('./app/routes/index');
 const users = require('./app/routes/users');
 const strategies = require('./app/routes/strategies');
-const db;
+var db;
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/doodcoin')
 	.then(() => console.log('doodcoin connection succesful'))
 	.catch((err) => console.error(err));
+
+// // Connect to the database
+// mongoose.connect(config.db);
+// let db = mongoose.connection;
+
+// db.on('open', () => {
+// 	console.log('Connected to the database.');
+// });
+
+// db.on('error', (err) => {
+// 	console.log(`Database error: ${err}`);
+// });
+
 
 // middleware
 app.use(express.static('public'));
