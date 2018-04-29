@@ -37,9 +37,9 @@ strategyController.create = function(req, res) {
 
 // Save new strategy
 strategyController.save = function(req, res) {
-	var name = USERNAME;
-	console.log(name.email);
-	req.body.name = name.email;
+	var name = USERNAME
+	console.log(name.email)
+	req.body.name = name.email
 	var strategy = new Strategy(req.body);
 
 	strategy.save(function(err) {
