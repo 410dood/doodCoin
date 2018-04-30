@@ -39,8 +39,17 @@ mongoose.connect('mongodb://localhost/doodCoin');
 
 // app.use('/users', users);
 // app.use('/strategies', strategies);
-app.use('/users', users);
-app.use('/strategies', strategies);
+
+// login route with placeholder response
+app.get('/strategies', function (req, res) {
+	res.render('strategies');
+});
+
+// login route with placeholder response
+app.get('/users', function (req, res) {
+	res.render('users');
+});
+
 
 // app.get('/', function (req, res) {
 // 	//render takes a relative path to whatever directory we designated as having all the view files.
