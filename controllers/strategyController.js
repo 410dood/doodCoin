@@ -1,3 +1,7 @@
+// controllers – defines your app routes and their logic
+
+
+
 console.log("strategycontroller page");
 
 var mongoose = require("mongoose");
@@ -40,7 +44,7 @@ strategyController.create = function(req, res) {
 strategyController.save = function(req, res) {
   var email = USERNAME
   console.log(email)
-  req.body.name = email
+  req.body.name = name.email
   var strategy = new Strategy(req.body);
 
   strategy.save(function(err) {

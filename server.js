@@ -69,6 +69,7 @@ app.get('/', function (req, res) {
   //render takes a relative path to whatever directory we designated as having all the view files.
   res.render('signup');
 });
+
 app.get('/home', function (req, res) {
 	res.render('home');
 });
@@ -81,16 +82,12 @@ app.post('/users', function (req, res) {
 	});
 });
 
-
-
 //going to get the data from the signup form, hash it, and store in the database
 app.post('/signup', function(req, res){
 	User.createSecure(req.body.email, req.body.password, function(err, newUserDocument){
 		res.json(newUserDocument);
 	});
 });
-
-
 
 app.post("/sessions", function(req, res){
 	User.authenticate(req.body.email, req.body.password, function(err, existingUserDocument){
