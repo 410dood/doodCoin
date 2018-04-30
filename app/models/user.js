@@ -33,12 +33,12 @@ UserSchema.statics.authenticate = function (email, password, callback) {
   // find user by email entered at log in
   // remember `this` refers to the User for methods defined on UserSchema.statics
   this.findOne({email: email}, function (err, foundUser) {
-    console.log("is this it");
-    console.log(email);
-global.USERNAME=email;
+    console.log("is this it")
+    console.log(email)
+global.USERNAME=email
     // throw error if can't find user
     if (!foundUser) {
-      console.log('No user with email ' + email);
+      console.log('No user with email ' + email)
       callback("Error: no user found", null);  // better error structures are available, but a string is good enough for now
     // if we found a user, check if password is correct
     } else if (foundUser.checkPassword(password)) {

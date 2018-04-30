@@ -63,11 +63,6 @@ app.get("/profile", function (req, res) {
 app.get('/login', function (req, res) {
 	res.render('login');
 });
-// app.get('/', function (req, res) {
-// 	//render takes a relative path to whatever directory we designated as having all the view files.
-// 	res.render('splash');
-// });
-
 
 // signup route with placeholder response
 app.get('/', function (req, res) {
@@ -99,6 +94,7 @@ app.post('/signup', function(req, res){
 
 app.post("/sessions", function(req, res){
 	User.authenticate(req.body.email, req.body.password, function(err, existingUserDocument){
+		console.log('session logged in');
 		if (err) console.log("error is " + err);
 		req.session.userId = existingUserDocument.id;
 		res.json(existingUserDocument);

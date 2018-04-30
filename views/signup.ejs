@@ -75,10 +75,8 @@
 </div> -->
 
 
-  <!-- Button to open the modal -->
   <button onclick="document.getElementById('id01').style.display='block'">Sign Up</button>
 
-  <!-- The Modal (contains the Sign Up form) -->
   <div id="id01" class="modal">
     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">times;</span>
     <form id"sign-up" class="modal-content" action="/login">
@@ -110,15 +108,12 @@
     </form>
   </div>
 
-  <!-- Button to open the modal login form -->
   <button onclick="document.getElementById('id01').style.display='block'">Login</button>
 
-  <!-- The Modal -->
   <div id="id01" class="modal">
     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
-    <!-- Modal Content -->
-    <form class="modal-content animate" action="/profile">
+    <form id="signup-form" class="modal-content animate" action="/profile">
       <div class="imgcontainer">
         <img src="Avatar.png" alt="Avatar" class="avatar">
       </div>
@@ -127,12 +122,12 @@
         <label for="uname">
           <b>Username</b>
         </label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
+        <input id="email-input" type="text" placeholder="Enter Username" name="uname" required>
 
         <label for="psw">
           <b>Password</b>
         </label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input id="pw-input" type="password" placeholder="Enter Password" name="psw" required>
 
         <button type="submit">Login</button>
         <label>

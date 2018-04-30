@@ -12,7 +12,7 @@ strategyController.list = function(req, res){
       console.log("Error:", err);
     }
     else {
-      res.render('./views/strategies/index' , {strategies: strategies});
+      res.render('../views/strategies/index' , {strategies: strategies});
     }
   });
 };
@@ -38,9 +38,9 @@ strategyController.create = function(req, res) {
 
 // Save new strategy
 strategyController.save = function(req, res) {
-  var name = USERNAME;
-  console.log(name.email);
-  req.body.name = name.email;
+  var email = USERNAME
+  console.log(email)
+  req.body.name = email
   var strategy = new Strategy(req.body);
 
   strategy.save(function(err) {
