@@ -6,7 +6,7 @@ var Strategy = require("../models/Strategy");
 var strategyController = {};
 
 // Show list of Strategies
-strategyController.list = function(req, res) {
+strategyController.list = function(req, res){
   Strategy.find({}).exec(function (err, strategies) {
     if (err) {
       console.log("Error:", err);
@@ -14,8 +14,8 @@ strategyController.list = function(req, res) {
     else {
       res.render('./views/strategies/index' , {strategies: strategies});
     }
-  })
-})
+  });
+};
 
 // Show strategy by id
 strategyController.show = function(req, res) {
