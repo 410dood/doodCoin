@@ -12,7 +12,7 @@ strategyController.list = function(req, res) {
       console.log("Error:", err);
     }
     else {
-      res.render('./views/strategies/index', {strategies: strategies})
+      res.render('./views/strategies/index' , {strategies: strategies});
     }
   })
 })
