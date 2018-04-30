@@ -1,4 +1,4 @@
-const express = require('express');
+var express = require('express');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var Schema = mongoose.Schema;
@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
 	email: String,
 	passwordDigest : String
-})
+});
 
 UserSchema.statics.createSecure = function(email, password, callback){
 	var UserModel = this;

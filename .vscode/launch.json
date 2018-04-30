@@ -5,25 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Time-Travel Live",
-            "type": "node-chakracore-time-travel-debugger",
+            "type": "node",
             "request": "launch",
-            "program": "${workspaceFolder}/server.js",
-            "cwd": "${workspaceFolder}"
-        },
-        {
-            "name": "Time-Travel Live",
-            "type": "node-chakracore-time-travel-debugger",
-            "request": "launch",
-            "program": "${workspaceFolder}/app.js",
-            "cwd": "${workspaceFolder}"
-        },
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/server.js"
         }
     ]
 }

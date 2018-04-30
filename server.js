@@ -1,10 +1,10 @@
 
-const express = require('express')
+const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 //var cookieParser = require('cookie-parser');
-const mongoose = require('mongoose')
-const path = require('path');
+const mongoose = require('mongoose');
+var path = require('path');
 const bcrypt = require('bcrypt');
 const app = express();
 const db = require('./app/routes');
@@ -80,14 +80,14 @@ app.get('/home', function (req, res) {
 app.post('/signup', function(req, res){
 	User.createSecure(req.body.email, req.body.password, function(err, newUserDocument){
 		res.json(newUserDocument)
-	})
+	});
 });
 
 app.get("/profile", function(req, res){
 	User.findOne({_id : req.session.userId}, function(err, userDocument){
-		res.render('profile', {user : userDocument})
-	})
-})
+		res.render('profile', {user : userDocument});
+	});
+});
 
 // login route with placeholder response
 app.get('/login', function (req, res) {
@@ -110,8 +110,8 @@ app.post("/sessions", function(req, res){
 // });
 
 app.listen(app.get('port'), () => {
-	console.log(`✅ PORT: ${app.get('port')} 🌟`)
-})
+	console.log(`✅ PORT: ${app.get('port')} 🌟`);
+});
 
 
 //////
