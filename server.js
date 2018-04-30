@@ -1,15 +1,33 @@
+var express = require('express'),
+	app = express(),
+	bodyParser = require('body-parser'),
+	mongoose = require('mongoose');
+db = require('models');
+const session = require('express-session');
+
+
+/////middleware
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.use(session({
+	saveUninitialized: true,
+	resave: true,
+	secret: 'SuperSecretCookie',
+	cookie: { maxAge: 30 * 60 * 1000 } // 30 minute cookie lifespan (in milliseconds)
+}));
 
 
 
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
+
+
+
+
 const path = require('path');
-//const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const User = require('./app/models/user');
-const session = require('express-session');
-const index = require('./app/routes/index');
 const users = require('./app/routes/users');
 const strategies = require('./app/routes/strategies');
 var db;
@@ -18,19 +36,6 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/doodcoin')
 	.then(() => console.log('doodcoin connection succesful'))
 	.catch((err) => console.error(err));
-
-// // Connect to the database
-// mongoose.connect(config.db);
-// let db = mongoose.connection;
-
-// db.on('open', () => {
-// 	console.log('Connected to the database.');
-// });
-
-// db.on('error', (err) => {
-// 	console.log(`Database error: ${err}`);
-// });
-
 
 // middleware
 app.use(express.static('public'));
@@ -72,6 +77,7 @@ app.get('/home', function (req, res) {
 //going to get the data from the signup form, hash it, and store in the database
 app.post('/signup', function(req, res){
 	User.createSecure(req.body.email, req.body.password, function(err, newUserDocument){
+		console.log(newUserDocument)
 		res.json(newUserDocument);
 	});
 });

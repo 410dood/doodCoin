@@ -11,7 +11,7 @@ var StrategySchema = new Schema({
 });
 
 
-var Strategy =mongoose.model('Strategy', StrategySchema);
+var Strategy = mongoose.model('Strategy', StrategySchema);
 //module.exports = mongoose.model('Strategy', StrategySchema);
 
 module.exports = Strategy;
