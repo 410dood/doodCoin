@@ -1,46 +1,36 @@
-const express = require('express'),
-	app = express(),
-	bodyParser = require('body-parser'),
-	mongoose = require('mongoose');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-mongoose.Promise = global.Promise;
 
-var User = require('./app/models/user')
-var session = require('express-session')
+const express = require('express')
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const mongoose = require('mongoose')
+const path = require('path');
+const session = require('express-session');
+//const MongoStore   = require('connect-mongo')(session);
+const bcrypt = require('bcrypt');
+const app = express();
+const db = require('./app/routes');
+const User = require("./app/models/Strategy");
+const Place = require('./app/models/user');
 
-mongoose.connect('mongodb://localhost/strategy')
-	.then(() => console.log('connection succesful'))
-	.catch((err) => console.error(err));
+//app.use(express.static(path.join(__dirname, 'public')));
 
-var index = require('./app/routes/index');
-var users = require('./app/routes/users');
-var strategies = require('./app/routes/strategies');
-
-// middleware
-app.use(express.static('public'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('port', process.env.PORT || 3000)
+app.set('port', process.env.PORT || 3000);
 
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json())
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use(morgan('tiny'));
 app.use(session({
-	saveUnitialized : true,
-	resave:true,
-	secret:'SuperSecretCookie',
-	cookie:{maxAge:30*60*1000}
+	saveUninitialized: true,
+	resave: true,
+	secret: 'SuperSecretCookie',
+	cookie: { maxAge: 30 * 60 * 1000 },
+	//store: new MongoStore({ url: 'mongodb://JP:mom@ds157599.mlab.com:57599/project2' })
 }));
-mongoose.connect('mongodb://localhost/doodCoin');
 
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/users', users);
-app.use('/strategies', strategies);
+ app.use('./app/routes/users', users);
+ app.use('./app/routes/strategies', strategies);
 
 
 // app.get('/', function (req, res) {

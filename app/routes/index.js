@@ -13,6 +13,7 @@ if (process.env.NODE_ENV == 'production') {
 
 module.exports.User = require('./users');
 
+module.exports.Strategy = require('./strategies');
 
 
 /* GET home page. */
