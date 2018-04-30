@@ -12,21 +12,15 @@ strategyController.list = function(req, res) {
       console.log("Error:", err);
     }
     else {
-      res.render("../views/strategies/index", {strategies: strategies});
+      res.render('./views/strategies/index', {strategies: strategies})
     }
   })
-}
-
-
-app.get('/views', function (req, res) {
-  //viewname can include or omit the filename extension
-  res.render(__dirname + '/views/')); 
-});
+})
 
 // Show strategy by id
 strategyController.show = function(req, res) {
   console.log("does username print below");
-  console.log(USERNAME);
+  console.log(USERNAME)
   Strategy.findOne({_id: req.params.id}).exec(function (err, strategy) {
     if (err) {
       console.log("Error:", err);
