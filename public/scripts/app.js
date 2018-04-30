@@ -1,3 +1,5 @@
+console.log('app.js working')
+
 $(document).ready(function(){
 
 	$("#signup-form").on("submit", function(event){
@@ -19,9 +21,9 @@ $(document).ready(function(){
 			method : "POST",
 			data : formData,
 			success : function(response){
-				$("#welcome").append("<h2>" + "signed up succesfully " + response.username + "!" + "</h2>").hide().fadeIn(2000).fadeOut(2000);
+				
+				$("h2").append(response.email + " is now a user email. Signed up succesfully. " + "Click login to proceed" + "!")
 
-				$("h1").append(response.email + " is now a user email")
 			}
 		})
 

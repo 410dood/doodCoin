@@ -43,14 +43,14 @@ app.use('/users', users);
 app.use('/strategies', strategies);
 
 
-app.get('/', function (req, res) {
-	//render takes a relative path to whatever directory we designated as having all the view files.
-	res.render('splash');
-});
+// app.get('/', function (req, res) {
+// 	//render takes a relative path to whatever directory we designated as having all the view files.
+// 	res.render('splash');
+// });
 
 
 // signup route with placeholder response
-app.get('/signup', function (req, res) {
+app.get('/', function (req, res) {
   //render takes a relative path to whatever directory we designated as having all the view files.
   res.render('signup');
 });
@@ -84,6 +84,7 @@ app.post("/sessions", function(req, res){
 app.get('/login', function (req, res) {
   res.render('login');
 });
+
 
 // listen on port 3000
 // app.listen(3000, function () {
