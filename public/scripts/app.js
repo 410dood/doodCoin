@@ -19,6 +19,8 @@ $(document).ready(function(){
 			method : "POST",
 			data : formData,
 			success : function(response){
+				$("#welcome").append("<h2>" + "signed up succesfully " + response.username + "!" + "</h2>").hide().fadeIn(2000).fadeOut(2000);
+
 				$("h1").append(response.email + " is now a user email")
 			}
 		})
