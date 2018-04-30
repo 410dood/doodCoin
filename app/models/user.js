@@ -1,6 +1,6 @@
-var mongoose = require('mongoose'),
-bcrypt = require('bcrypt');
-
+const express = require('express');
+var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
@@ -13,9 +13,7 @@ UserSchema.statics.createSecure = function(email, password, callback){
 
 	bcrypt.genSalt(function(err, salt){
 		console.log("salt", salt);
-
 		bcrypt.hash(password, salt, function(err, hash){
-
 			//once we have a encrypted hash, we can store that in our database
 			UserModel.create({
 				email : email,

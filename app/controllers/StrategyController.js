@@ -1,3 +1,5 @@
+console.log("strategycontroller page");
+
 var mongoose = require("mongoose");
 var Strategy = require("../models/Strategy");
 
@@ -72,7 +74,7 @@ strategyController.update = function(req, res) {
       console.log(err);
       res.render("../views/strategies/edit", {strategy: req.body});
     }
-    res.redirect("/strategies/show/"+strategy._id);
+    res.redirect("/strategies/show"+strategy._id);
   });
 };
 
