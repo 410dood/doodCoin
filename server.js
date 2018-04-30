@@ -1,14 +1,14 @@
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
+var express = require('express');
+var bodyParser = require('body-parser');
+var morgan = require('morgan');
 //var cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var path = require('path');
-const bcrypt = require('bcrypt');
-const app = express();
-const db = require('./app/routes');
-const Strategy = require("./app/models/Strategy");
+var bcrypt = require('bcrypt');
+var app = express();
+var db = require('./app/routes');
+var Strategy = require("./app/models/Strategy");
 var User = require('./app/models/user');
 var session = require('express-session');
 
@@ -18,6 +18,8 @@ var users = require('./app/routes/users');
 app.use('/users', users);
 var index = require('./app/routes/index');
 
+
+app.set('views', path.join(__dirname, '/views'));
 
 
 app.use(express.static('public'));
@@ -36,6 +38,7 @@ app.use(session({
 	cookie: { maxAge: 30 * 60 * 1000 },
 }));
 mongoose.connect('mongodb://localhost/doodCoin');
+app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/users', users);
 // app.use('/strategies', strategies);
@@ -50,18 +53,29 @@ app.get('/users', function (req, res) {
 	res.render('users');
 });
 
+app.get("/profile", function (req, res) {
+	User.findOne({ _id: req.session.userId }, function (err, userDocument) {
+		res.render('profile', { user: userDocument });
+	});
+});
 
+// login route with placeholder response
+app.get('/login', function (req, res) {
+	res.render('login');
+});
 // app.get('/', function (req, res) {
 // 	//render takes a relative path to whatever directory we designated as having all the view files.
 // 	res.render('splash');
 // });
 
-app.use(express.static(path.join(__dirname, 'public')));
 
 // signup route with placeholder response
 app.get('/', function (req, res) {
   //render takes a relative path to whatever directory we designated as having all the view files.
   res.render('signup');
+});
+app.get('/home', function (req, res) {
+	res.render('home');
 });
 
 //create new secure user in database
@@ -72,33 +86,22 @@ app.post('/users', function (req, res) {
 	});
 });
 
-app.get('/home', function (req, res) {
-	res.render('home');
-});
+
 
 //going to get the data from the signup form, hash it, and store in the database
 app.post('/signup', function(req, res){
 	User.createSecure(req.body.email, req.body.password, function(err, newUserDocument){
-		res.json(newUserDocument)
+		res.json(newUserDocument);
 	});
 });
 
-app.get("/profile", function(req, res){
-	User.findOne({_id : req.session.userId}, function(err, userDocument){
-		res.render('profile', {user : userDocument});
-	});
-});
 
-// login route with placeholder response
-app.get('/login', function (req, res) {
-	res.render('login');
-});
 
 app.post("/sessions", function(req, res){
 	User.authenticate(req.body.email, req.body.password, function(err, existingUserDocument){
-		if (err) console.log("error is " + err)
-		req.session.userId = existingUserDocument.id
-		res.json(existingUserDocument)
+		if (err) console.log("error is " + err);
+		req.session.userId = existingUserDocument.id;
+		res.json(existingUserDocument);
 	});
 });
 

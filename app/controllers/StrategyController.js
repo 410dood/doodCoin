@@ -14,8 +14,14 @@ strategyController.list = function(req, res) {
     else {
       res.render("../views/strategies/index", {strategies: strategies});
     }
-  });
-};
+  })
+}
+
+
+app.get('/views', function (req, res) {
+  //viewname can include or omit the filename extension
+  res.render(__dirname + '/views/')); 
+});
 
 // Show strategy by id
 strategyController.show = function(req, res) {

@@ -19,23 +19,23 @@ UserSchema.statics.createSecure = function(email, password, callback){
 				email : email,
 				passwordDigest : hash
 			}, callback);
-		})
-	})
-}
+		});
+	});
+};
 
 UserSchema.methods.checkPassword = function(password) {
 	// return true if the password typed matches the one stored in the DB. 'this' refers to the user document that called this function (from es5)
-	return bcrypt.compareSync(password, this.passwordDigest)
-}
+	return bcrypt.compareSync(password, this.passwordDigest);
+};
 
 // authenticate user (when user logs in)
 UserSchema.statics.authenticate = function (email, password, callback) {
   // find user by email entered at log in
   // remember `this` refers to the User for methods defined on UserSchema.statics
   this.findOne({email: email}, function (err, foundUser) {
-    console.log("is this it")
-    console.log(foundUser);
-global.USERNAME=foundUser;
+    console.log("is this it");
+    console.log(email);
+global.USERNAME=email;
     // throw error if can't find user
     if (!foundUser) {
       console.log('No user with email ' + email);
