@@ -1,106 +1,181 @@
-var express = require('express'),
-	app = express(),
-	bodyParser = require('body-parser'),
-	mongoose = require('mongoose');
-db = require('models');
-const session = require('express-session');
-
-
-/////middleware
-app.use(express.static('public'));
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-app.use(session({
-	saveUninitialized: true,
-	resave: true,
-	secret: 'SuperSecretCookie',
-	cookie: { maxAge: 30 * 60 * 1000 } // 30 minute cookie lifespan (in milliseconds)
-}));
-
-
-
-
-
-
-
+// include modules
+require('dotenv').config(); // loads the .env
+const bodyParser = require('body-parser');
+const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
+const flash = require('connect-flash');
+const isLoggedIn = require('./middleware/isLoggedIn');
+const mongoose = require('mongoose');
+const logger = require('morgan');
+const passport = require('./config/passportConfig');
 const path = require('path');
-const cookieParser = require('cookie-parser');
-const User = require('./app/models/user');
-const users = require('./app/routes/users');
-const strategies = require('./app/routes/strategies');
-var db;
-var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/doodcoin')
-	.then(() => console.log('doodcoin connection succesful'))
-	.catch((err) => console.error(err));
+const session = require('express-session');
+const db = require('./models');
+const cloudinary = require('cloudinary');
+const multer = require('multer');
+const upload = multer({ dest: './uploads/' });
 
-// middleware
+// initialize app
+const app = express();
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/doodcoin');
+
+/* error logger, static routes */
+app.use(logger('dev'));
 app.use(express.static('public'));
+app.use('/static', express.static(path.join(__dirname, 'public')));
+
+// set and use statements. set view engine and use middleware.
 app.set('view engine', 'ejs');
-app.set('port', process.env.PORT || 3000);
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressLayouts);
 app.use(session({
-	saveUnitialized: true,
-	resave: true,
-	secret:'lambchop',
-	cookie:{maxAge:30*60*1000}
+	secret: process.env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: false
 }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/users', users);
-app.use('/strategies', strategies);
-
-
-app.get('/', function (req, res) {
-	//render takes a relative path to whatever directory we designated as having all the view files.
-	res.render('splash');
+// just a convenience, but makes life easier...
+app.use(function (req, res, next) {
+	res.locals.currentUser = req.user;
+	res.locals.alerts = req.flash();
+	next();
 });
 
-
-// signup route with placeholder response
-app.get('/signup', function (req, res) {
-	//render takes a relative path to whatever directory we designated as having all the view files.
-	res.render('signup');
+// top-level routes
+app.get('/', (req, res) => {
+	res.render('home')
 });
 
-app.get('/home', function (req, res) {
-	res.render('home');
+// include any routes from controllers
+app.use('/auth', require('./controllers/auth'));
+app.use('/profile', require('./controllers/profile'));
+app.use('/StrategyController', require('./controllers/profile'))
+
+/* Error Handling */
+app.get('*', function (req, res) {
+	res.status(404).send('This is not the page you are looking for')
 });
 
-//going to get the data from the signup form, hash it, and store in the database
-app.post('/signup', function(req, res){
-	User.createSecure(req.body.email, req.body.password, function(err, newUserDocument){
-		console.log(newUserDocument)
-		res.json(newUserDocument);
-	});
-});
-app.get('/profile', function(req, res){
-	User.findOne({_id : req.session.userId}, function(err, userDocument){
-		res.render('profile', {user : userDocument});
-	});
-});
-app.post('/sessions', function(req, res){
-	User.authenticate(req.body.email, req.body.password, function(err, existingUserDocument){
-		if (err) console.log('error is ' + err);
-		req.session.userId = existingUserDocument.id;
-		res.json(existingUserDocument);
-	});
-});
-// login route with placeholder response
-app.get('/login', function (req, res) {
-	res.render('login');
-});
+/* Listen on PORT */
+app.set('port', process.env.PORT || 3001)
 
 app.listen(app.get('port'), () => {
-	console.log(`✅ PORT: ${app.get('port')} 🌟`);
-});
+	console.log(`Listening on port: ${app.get('port')}`)
+})
+
+//////////////////////////
+
+
+
+
+
+
+// var express = require('express'),
+// 	app = express(),
+// 	bodyParser = require('body-parser'),
+// 	mongoose = require('mongoose');
+// db = require('models');
+// const session = require('express-session');
+
+
+// /////middleware
+// app.use(express.static('public'));
+// app.set('view engine', 'ejs');
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+
+// app.use(session({
+// 	saveUninitialized: true,
+// 	resave: true,
+// 	secret: 'SuperSecretCookie',
+// 	cookie: { maxAge: 30 * 60 * 1000 } // 30 minute cookie lifespan (in milliseconds)
+// }));
+
+
+
+
+
+
+
+// const path = require('path');
+// const cookieParser = require('cookie-parser');
+// const User = require('./app/models/user');
+// const users = require('./app/routes/users');
+// const strategies = require('./app/routes/strategies');
+// var db;
+// var mongoose = require('mongoose');
+// mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb://localhost/doodcoin')
+// 	.then(() => console.log('doodcoin connection succesful'))
+// 	.catch((err) => console.error(err));
+
+// // middleware
+// app.use(express.static('public'));
+// app.set('view engine', 'ejs');
+// app.set('port', process.env.PORT || 3000);
+
+// app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.json());
+// app.use(session({
+// 	saveUnitialized: true,
+// 	resave: true,
+// 	secret:'lambchop',
+// 	cookie:{maxAge:30*60*1000}
+// }));
+
+// app.use(cookieParser());
+// app.use(express.static(path.join(__dirname, 'public')));
+
+// app.use('/users', users);
+// app.use('/strategies', strategies);
+
+
+// app.get('/', function (req, res) {
+// 	//render takes a relative path to whatever directory we designated as having all the view files.
+// 	res.render('splash');
+// });
+
+
+// // signup route with placeholder response
+// app.get('/signup', function (req, res) {
+// 	//render takes a relative path to whatever directory we designated as having all the view files.
+// 	res.render('signup');
+// });
+
+// app.get('/home', function (req, res) {
+// 	res.render('home');
+// });
+
+// //going to get the data from the signup form, hash it, and store in the database
+// app.post('/signup', function(req, res){
+// 	User.createSecure(req.body.email, req.body.password, function(err, newUserDocument){
+// 		console.log(newUserDocument)
+// 		res.json(newUserDocument);
+// 	});
+// });
+// app.get('/profile', function(req, res){
+// 	User.findOne({_id : req.session.userId}, function(err, userDocument){
+// 		res.render('profile', {user : userDocument});
+// 	});
+// });
+// app.post('/sessions', function(req, res){
+// 	User.authenticate(req.body.email, req.body.password, function(err, existingUserDocument){
+// 		if (err) console.log('error is ' + err);
+// 		req.session.userId = existingUserDocument.id;
+// 		res.json(existingUserDocument);
+// 	});
+// });
+// // login route with placeholder response
+// app.get('/login', function (req, res) {
+// 	res.render('login');
+// });
+
+// app.listen(app.get('port'), () => {
+// 	console.log(`✅ PORT: ${app.get('port')} 🌟`);
+// });
 
 
 ////////
