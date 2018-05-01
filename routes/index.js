@@ -1,23 +1,77 @@
-var mongoose = require('mongoose');
-var express = require('express');
-var router = express.Router();
+var express = require('express'),
+  router = express.Router(),
+  controller = require('../controllers');
 
-if (process.env.NODE_ENV == 'production') {
-  console.log('connecting to... ' + process.env.NODE_ENV);
-  console.log('also connecting to mlab ' + process.env.MLAB_URL);
-  mongoose.connect(process.env.MLAB_URL);
-} else {
-  console.log('this is the local server ');
-  mongoose.connect('mongodb://localhost/doodcoin');
-}
-
-module.exports.User = require('./users').default;
-module.exports.Strategy = require('./strategies');
+// session
+router.use(session({
+  saveUninitialized: true,
+  resave: true,
+  secret: 'SuperSecretCookie',
+  cookie: { maxAge: 30 * 60 * 1000 } // 30 minute cookie lifespan (in milliseconds)
+}));
 
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+// home page
+router.get('/', controller.home);
+
+
+
+// SEARCHES
+
+// // get all searches
+// router.get('/searches', controller.getSearches);
+
+// // save search
+// router.post('/searches/save', controller.saveSearch);
+
+// // save search
+// router.post('/user/searches/save', controller.saveUserSearch);
+
+// // update search page
+// router.post('/searches/update', controller.updateSearchPage);
+
+// // update search call
+// router.post('/search/update/:id', controller.updateSearch);
+
+// // delete search
+// router.post('/searches/delete', controller.deleteSearch);
+
+// // search results
+// router.post('/results', controller.results);
+
+
+
+// USER
+
+// login page
+router.get('/signin', controller.signin);
+
+// user login
+router.post('/signin', controller.signinUser);
+
+// signup
+router.get('/signup', controller.signup);
+
+// post user informaiton
+router.post('/signup', controller.signupUser);
+
+// user profile page
+router.get('/profile', controller.profile);
+
+// user search page
+router.get('/user/searches', controller.userSearches);
+
+// post user informaiton
+router.post('/sessions', controller.session);
+
+// log the user out
+router.get('/signout', controller.signout);
+
+
+
+// catch all 404
+router.get('*', controller.fourzerofour);
+
+
 
 module.exports = router;

@@ -5,20 +5,14 @@ var morgan = require('morgan');
 //var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 var path = require('path');
-var bcrypt = require('bcrypt');
 var app = express();
 var db = require('./routes');
-var Strategy = require("./models/Strategy");
 var User = require('./models/user');
-var session = require('express-session');
-
-var strategies = require('./routes/strategies');
-app.use('/strategies', strategies);
-var users = require('./routes/users');
-app.use('/users', users);
-var index = require('./routes/index');
-
-
+// var strategies = require('./routes/strategies');
+// app.use('/strategies', strategies);
+// var users = require('./routes/users');
+// app.use('/users', users);
+// var index = require('./routes/index');
 //app.set('views', path.join(__dirname, '/views'));
 
 app.use(express.static('public'));
@@ -50,29 +44,26 @@ app.get('/', (req, res) => res.sendFile('auth.html', { root: __dirname }));
 // const port = process.env.PORT || 3000;
 // app.listen(port, () => console.log('App listening on port ' + port));
 
-//////////auth//////////
-
-
-// login route with placeholder response
-app.get('/strategies', function (req, res) {
-	res.render('strategies');
-});
+// // login route with placeholder response
+// app.get('/strategies', function (req, res) {
+// 	res.render('strategies');
+// });
 
 // login route with placeholder response
 app.get('/users', function (req, res) {
 	res.render('users');
 });
 
-app.get("/profile", function (req, res) {
-	User.findOne({ _id: req.session.userId }, function (err, userDocument) {
-		res.render('profile', { user: userDocument });
-	});
-});
+// app.get("/profile", function (req, res) {
+// 	User.findOne({ _id: req.session.userId }, function (err, userDocument) {
+// 		res.render('profile', { user: userDocument });
+// 	});
+// });
 
-// login route with placeholder response
-app.get('/login', function (req, res) {
-	res.render('login');
-});
+// // login route with placeholder response
+// app.get('/login', function (req, res) {
+// 	res.render('login');
+// });
 
 // signup route with placeholder response
 // app.get('/', function (req, res) {
@@ -80,33 +71,33 @@ app.get('/login', function (req, res) {
 //   res.render('signup');
 // });
 
-app.get('/home', function (req, res) {
-	res.render('home');
-});
+// app.get('/home', function (req, res) {
+// 	res.render('home');
+// });
 
-//create new secure user in database
-app.post('/users', function (req, res) {
-	User.createSecure(req.body.email, req.body.password, function (err, newUser) {
-		res.json(newUser);
-		console.log(newUser);
-	});
-});
+// //create new secure user in database
+// app.post('/users', function (req, res) {
+// 	User.createSecure(req.body.email, req.body.password, function (err, newUser) {
+// 		res.json(newUser);
+// 		console.log(newUser);
+// 	});
+// });
 
-//going to get the data from the signup form, hash it, and store in the database
-app.post('/signup', function(req, res){
-	User.createSecure(req.body.email, req.body.password, function(err, newUserDocument){
-		res.json(newUserDocument);
-	});
-});
+// //going to get the data from the signup form, hash it, and store in the database
+// app.post('/signup', function(req, res){
+// 	User.createSecure(req.body.email, req.body.password, function(err, newUserDocument){
+// 		res.json(newUserDocument);
+// 	});
+// });
 
-app.post("/sessions", function(req, res){
-	User.authenticate(req.body.email, req.body.password, function(err, existingUserDocument){
-		console.log('session logged in');
-		if (err) console.log("error is " + err);
-		req.session.userId = existingUserDocument.id;
-		res.json(existingUserDocument);
-	});
-});
+// app.post("/sessions", function(req, res){
+// 	User.authenticate(req.body.email, req.body.password, function(err, existingUserDocument){
+// 		console.log('session logged in');
+// 		if (err) console.log("error is " + err);
+// 		req.session.userId = existingUserDocument.id;
+// 		res.json(existingUserDocument);
+// 	});
+// });
 
 
 ////////////////////////////   passport   /////////////////////////////////////////
