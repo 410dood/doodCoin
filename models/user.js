@@ -1,55 +1,30 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
-var Schema = mongoose.Schema;
+// var express = require('express');
+// var mongoose = require('mongoose');
+// var bcrypt = require('bcrypt');
+// var Schema = mongoose.Schema;
 
+// var UserSchema = new Schema({
+// 	email: String,
+// 	passwordDigest : String
+// });
 var UserSchema = new Schema({
-	email: String,
-	passwordDigest : String
+ login: '410dood',
+     id: 4041727,
+     avatar_url: 'https://avatars2.githubusercontent.com/u/4041727?v=4',
+     gravatar_id: '',
+     html_url: 'https://github.com/410dood',
+     name: 'Bill Doody',
+     company: 'Heavydoodyworks',
+     blog: 'heavydoodyworks.com',
+     location: 'Denver',
+     email: 'wdoody@yahoo.com',
+     hireable: null,
+     bio: null,
+     public_repos: 46,
 });
 
-UserSchema.statics.createSecure = function(email, password, callback){
-	var UserModel = this;
 
-	bcrypt.genSalt(function(err, salt){
-		console.log("salt", salt);
-		bcrypt.hash(password, salt, function(err, hash){
-			//once we have a encrypted hash, we can store that in our database
-			UserModel.create({
-				email : email,
-				passwordDigest : hash
-			}, callback);
-		});
-	});
-};
-
-UserSchema.methods.checkPassword = function(password) {
-	// return true if the password typed matches the one stored in the DB. 'this' refers to the user document that called this function (from es5)
-	return bcrypt.compareSync(password, this.passwordDigest);
-};
-
-// authenticate user (when user logs in)
-UserSchema.statics.authenticate = function (email, password, callback) {
-  // find user by email entered at log in
-  // remember `this` refers to the User for methods defined on UserSchema.statics
-  this.findOne({email: email}, function (err, foundUser) {
-    console.log("is this it")
-    console.log(email)
-global.USERNAME=email
-    // throw error if can't find user
-    if (!foundUser) {
-      console.log('No user with email ' + email)
-      callback("Error: no user found", null);  // better error structures are available, but a string is good enough for now
-    // if we found a user, check if password is correct
-    } else if (foundUser.checkPassword(password)) {
-      callback(null, foundUser);
-    } else {
-      callback("Error: incorrect password", null);
-    }
-  });
-};
-
-//this line creates the model from the schema
+// this line creates the model from the schema
 var User = mongoose.model('User', UserSchema);
 
-module.exports = User;
+ module.exports = User;
