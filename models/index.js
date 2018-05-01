@@ -1,4 +1,8 @@
+var express = require('express');
+var session = require('express-session');
 var mongoose = require('mongoose');
+var router = express.Router();
+
 
 if (process.env.NODE_ENV == 'production') {
   console.log('connecting to... ' + process.env.NODE_ENV);
@@ -9,7 +13,7 @@ if (process.env.NODE_ENV == 'production') {
   mongoose.connect('mongodb://localhost/doodcoin');
 }
 
-module.exports.User = require('./users').default;
+//module.exports.User = require('./users').default;
 //module.exports.Strategy = require('./strategies');
 
 
@@ -19,4 +23,4 @@ router.get('/', function(req, res, next) {
 });
 
 //module.exports.Search = require("./strategy");
-module.exports.User = require("./user");
+//module.exports.User = require("./user");

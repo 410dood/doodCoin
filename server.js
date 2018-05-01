@@ -8,6 +8,8 @@ var path = require('path');
 var app = express();
 var db = require('./routes');
 var User = require('./models/user');
+var session = require('express-session');
+
 // var strategies = require('./routes/strategies');
 // app.use('/strategies', strategies);
 // var users = require('./routes/users');
@@ -52,6 +54,9 @@ app.get('/', (req, res) => res.sendFile('auth.html', { root: __dirname }));
 // login route with placeholder response
 app.get('/users', function (req, res) {
 	res.render('users');
+});
+app.get('/profile', function (req, res) {
+		res.render('profile');
 });
 
 // app.get("/profile", function (req, res) {
