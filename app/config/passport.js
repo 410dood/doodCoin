@@ -8,7 +8,7 @@ var GithubStrategy = require('passport-github2').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 // var InstagramStrategy = require('passport-instagram').Strategy;
 
-var User = require('../app/models/user');
+var User = require('../models/user');
 
 var configAuth = require('./auth');
 

@@ -8,7 +8,7 @@
 //     }
 // };
 
-console.log('config/auth.js -- MAKE SURE YOU CHANGE TO ENV BEFORE DEPLOY')
+console.log('config/auth.js -- MAKE SURE YOU CHANGE TO ENV BEFORE DEPLOY');
 //MAKE SURE AND CHANGE BEFORE DEPLOYING
 
 module.exports = {

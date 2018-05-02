@@ -1,21 +1,73 @@
-'use strict';
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var bcrypt = require('bcrypt-nodejs');
 
-var User = new Schema({
+var userSchema = mongoose.Schema({
+
+    facebook: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
+    },
+    google: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
+    },
     github: {
         id: String,
-        displayName: String,
+        token: String,
+        name: String,
         username: String,
-        publicRepos: Number
+        email: String,
+        public_repos: Number,
+        public_gists: Number,
+        followers: Number,
+        following: Number
     },
-    nbrClicks: {
-        clicks: Number
+    twitter: {
+        id: String,
+        token: String,
+        name: String,
+        followers_count: Number,
+        friends_count: Number,
+        screen_name: String,
+        favourites_count: Number,
+        photo: String
     }
+
 });
 
-module.exports = mongoose.model('User', User);
+userSchema.methods.generateHash = function (password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+userSchema.methods.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.local.password);
+};
+
+module.exports = mongoose.model('User', userSchema);
+
+// 'use strict';
+
+// var mongoose = require('mongoose');
+// var Schema = mongoose.Schema;
+
+// var User = new Schema({
+//     github: {
+//         id: String,
+//         displayName: String,
+//         username: String,
+//         publicRepos: Number
+//     },
+//     nbrClicks: {
+//         clicks: Number
+//     }
+// });
+
+// module.exports = mongoose.model('User', User);
 
 
 // var bcrypt = require('bcrypt-nodejs');
