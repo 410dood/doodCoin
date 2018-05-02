@@ -16,8 +16,8 @@ exports.get = function (id, cb) {
     db.fetch({ id: id }, function (err, docs) {
         if (err) return cb(err)
         cb(null, docs[0])
-    })
-}
+    });
+};
 
 // Get all comments
 exports.all = function (cb) {
