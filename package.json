@@ -31,9 +31,7 @@
     "passport-twitter": "^1.0.4",
     "https": "^1.0.0",
     "passport-facebook-token": "^3.3.0",
-    "passport-linkedin": "^1.0.0",
-                
-        
+    "passport-linkedin": "^1.0.0"
   },
   "devDependencies": {
     "jshint": "^2.9.5"
