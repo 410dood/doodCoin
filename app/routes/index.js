@@ -1,4 +1,6 @@
 
+var path = process.cwd();
+
 module.exports = function (app, passport) {
 
   function isLoggedIn(req, res, next) {
@@ -8,7 +10,6 @@ module.exports = function (app, passport) {
       res.redirect('/login');
     }
   }
-};
 
 app.route('/')
   .get(isLoggedIn, function (req, res) {
@@ -27,6 +28,16 @@ app.route('/profile')
   .get(isLoggedIn, function (req, res) {
     res.sendFile(path + '/public/profile.html');
   });
+app.route('/api/:id')
+  .get(isLoggedIn, function (req, res) {
+    res.json(req.user.github);
+  });
+app.route('/auth/github/callback')
+  .get(passport.authenticate('github', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
+};
 
 
 // var express = require('express'),

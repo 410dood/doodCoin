@@ -1,5 +1,5 @@
 {
-  "name": "simple-login",
+  "name": "billy-bob-doody",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -8,24 +8,18 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "DOODY",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^2.0.1",
-    "body-parser": "^1.18.2",
-    "commander": "^2.15.1",
-    "cookie-parser": "^1.4.3",
+    "dotenv": "^1.2.0",
     "ejs": "^2.5.9",
     "ejs-lint": "^0.3.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "moment": "^2.22.1",
-    "mongoose": "^5.0.16",
-    "morgan": "^1.9.0",
-    "passport": "^0.4.0",
-    "passport-facebook": "^2.1.1",
-    "passport-github": "^1.1.0",
-    "serve-favicon": "^2.5.0"
+    "mongoose": "^4.1.0",
+    "passport": "^0.2.2",
+    "passport-github": "^1.0.0"
   },
   "devDependencies": {
     "jshint": "^2.9.5"
