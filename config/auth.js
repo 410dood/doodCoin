@@ -1,17 +1,11 @@
 // config/auth.js
+'use strict';
 
-// expose our config directly to our application using module.exports
 module.exports = {
-
-    'facebookAuth': {
-        'clientID': 'your-secret-clientID-here', // your App ID
-        'clientSecret': 'your-client-secret-here', // your App Secret
-        'callbackURL': 'http://localhost:8080/auth/facebook/callback'
-    },
-
     'githubAuth': {
-        'consumerKey': 'your-consumer-key-here',
-        'consumerSecret': 'your-client-secret-here',
-        'callbackURL': 'http://localhost:8080/auth/twitter/callback'
-    },
+        'clientID': process.env.GITHUB_KEY,
+        'clientSecret': process.env.GITHUB_SECRET,
+        'callbackURL': process.env.APP_URL + 'auth/github/callback'
+    }
 };
+
