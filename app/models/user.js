@@ -18,6 +18,8 @@ var userSchema = mongoose.Schema({
     },
     github: {
         id: String,
+        avatar_url: String,
+        url: String,
         token: String,
         name: String,
         username: String,

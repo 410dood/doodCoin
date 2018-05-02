@@ -1,5 +1,5 @@
 'use strict';
-
+console.log(' common/ajax-functions.js page loaded');
 var appUrl = window.location.origin;
 var ajaxFunctions = {
     ready: function ready(fn) {

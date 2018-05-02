@@ -26,7 +26,7 @@ module.exports = {
 		var request = https.get(options, function(result) {
 			result.setEncoding('utf8');
 			result.on('data', function(chunk) {
-
+				console.log(chunk);
 				buffer += chunk;
 			});
 
@@ -34,7 +34,7 @@ module.exports = {
 				try {
 					var parsed = JSON.parse(buffer);
 				} catch (err) {
-					//console.error('Unable to parse response as JSON', err);
+					console.error('Unable to parse response as JSON', err);
 					return res.render('index.ejs');
 				}
 
@@ -71,7 +71,7 @@ module.exports = {
 		});
 
 		request.on('error', function(e) {
-			//console.log('error from facebook.getFbData: ' + e.message);
+			console.log('error from facebook.getFbData: ' + e.message);
 			return res.render('index.ejs');
 		});
 

@@ -1,3 +1,5 @@
+console.log('/models/index.js loaded');
+
 var express = require('express');
 var session = require('express-session');
 var mongoose = require('mongoose');

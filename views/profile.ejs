@@ -65,6 +65,9 @@
                     <h3 class="text-primart"><span class="fa fa-github"></span> Github</h3>
 
                     <p>
+                        <strong>avatar</strong>:<%= user.github.avatar_url %><br>
+                        <strong>avatar</strong>:<%= user.github.avatar%><br>
+
                         <strong>id</strong>: <%= user.github.id %><br>
                         <strong>token</strong>: <%= user.github.token %><br>
                         <strong>name</strong>: <%= user.github.name %><br>
@@ -74,6 +77,7 @@
                         <strong>public_gists</strong>: <%= user.github.public_gists %><br>
                         <strong>followers</strong>: <%= user.github.followers %><br>
                         <strong>following</strong>: <%= user.github.following %><br>
+                        <img src="<%= user.github.avatar_url%>">
                     </p>
                     
                     <a href="/friends/github/<%= user.github.username %>" class="btn btn-danger"><span class="fa fa-github"></span> Friends</a>
@@ -107,6 +111,12 @@
         </div>
 
     </div>
+
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+    <% include partials/script %>
 </body>
 
 </html>

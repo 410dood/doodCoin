@@ -127,7 +127,7 @@ module.exports = function (passport) {
 
 
             process.nextTick(function () {
-
+console.log(profile)
                 User.findOne({
                     'github.id': profile.id
                 }, function (err, user) {
@@ -143,12 +143,22 @@ module.exports = function (passport) {
                         newUser.github.id = profile.id;
                         newUser.github.token = accessToken;
                         newUser.github.name = profile.displayName;
+                        newUser.github.url = profile.profile_Url;
                         newUser.github.username = profile.username;
                         newUser.github.email = profile.emails[0].value;
+                        newUser.github.avatar = profile.photos.avatar_url;
+                        console.log(profile.photos);
+                        console.log(newUser.github.avatar);
+                        console.log(profile.photos);
+                        console.log(profile.photos.avatar_url);
+
+
                         newUser.github.public_repos = profile._json.public_repos;
                         newUser.github.public_gists = profile._json.public_gists;
                         newUser.github.followers = profile._json.followers;
                         newUser.github.following = profile._json.following;
+                        newUser.github.avatar_url = profile._json.avatar_url;
+
 
                         newUser.save(function (err) {
                             if (err)
