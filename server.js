@@ -60,7 +60,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-var configDB = require('./config/database.js');
+var configDB = require('./app/config/database.js');
 
 mongoose.connect(configDB.url); 
 
@@ -82,7 +82,7 @@ mongoose.connect(configDB.url);
 
 
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./app/config/passport')(passport); // pass passport for configuration
 
 // comment this stuff so you get it
 app.use(morgan('dev')); // log every request to the console
@@ -102,7 +102,7 @@ app.use(passport.initialize());
 app.use(passport.session()); 
 app.use(flash()); //use with session for social login i think
 
-require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./app/routes/index.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 app.listen(port);
 console.log('See you at port ;) ' + port);
