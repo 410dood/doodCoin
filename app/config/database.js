@@ -1,6 +1,6 @@
 
 module.exports = {
 
-    'url': 'mongodb://localhost/doodCoin' 
+    'url': 'mongodb://localhost/doodCoin'
 
 };

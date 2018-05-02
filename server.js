@@ -60,24 +60,24 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-var configDB = require('./app/config/database.js');
+var db = require('./app/config/database.js').default;
+var db = "mongodb://admin:admin@ds037395.mlab.com:37395/doodcoin"
 
-mongoose.connect(configDB.url); 
+//mongoose.connect(db.url); 
 
+if (process.env.MONGODB_URI) {
+	mongoose.connect(process.env.MONGODB_URI);
 
-// if (process.env.MONGODB_URI) {
-// 	mongoose.connect(process.env.MONGODB_URI);
+} else {
 
-// } else {
-
-// 	mongoose.connect(db, function (err) {
-// 		if (err) {
-// 			console.log(err);
-// 		} else {
-// 			console.log('mongoose connection is successful on: ' + db);
-// 		}
-// 	});
-// }
+	mongoose.connect(db, function (err) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('mongoose connection is successful on: ' + db);
+		}
+	});
+}
 
 
 
