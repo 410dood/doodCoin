@@ -149,5 +149,5 @@ module.exports = function (app, passport) {
 // router.get('*', controller.fourzerofour);
 
 
-
+};
 module.exports = router;
