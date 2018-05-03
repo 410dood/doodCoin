@@ -26,9 +26,6 @@
 // 	});
 // }
 
-// app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
-// app.use('/public', express.static(process.cwd() + '/public'));
-// app.use('/common', express.static(process.cwd() + '/app/common'));
 
 
 // app.use(session({
@@ -49,6 +46,7 @@
 
 
 var express = require('express');
+var path = require('path');
 var app = express();
 var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
@@ -62,7 +60,6 @@ var session = require('express-session');
 
 //var db = require('./app/config/database.js').default;
 var db = "mongodb://admin:admin@ds037395.mlab.com:37395/doodcoin";
-
 //mongoose.connect(db.url); 
 mongoose.Promise = global.Promise;
 
@@ -82,6 +79,13 @@ if (process.env.MONGODB_URI) {
 }
 
 require('./app/config/passport')(passport); // pass passport for configuration
+
+ app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
+ app.use('/public', express.static(process.cwd() + '/public'));
+ app.use('/common', express.static(process.cwd() + '/app/common'));
+app.use('/view', express.static(process.cwd() + './views'));
+
+
 
 // comment this stuff so you get it
 app.use(morgan('dev')); // log every request to the console
@@ -104,6 +108,23 @@ app.use(flash()); //use with session for social login i think
 
 require('./app/routes/index.js')(app, passport); // l pass in passport
 
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
+});
+
+// error handler
+app.use(function (err, req, res, next) {
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+	// render the error page
+	res.status(err.status || 500);
+	res.render('error');
+});
 app.listen(port);
 console.log('doodcoin working sorta on port... ' + port);
 

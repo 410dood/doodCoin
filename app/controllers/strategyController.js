@@ -1,5 +1,7 @@
+console.log('strategyController page loaded')
+var mongoose = require("mongoose");
 var Strategy = require('../models/Strategy');
-var Strategy = mongoose.model('Strategy');
+//var Strategy = mongoose.model('Strategy');
 
 var strategyController = {};
 
@@ -24,7 +26,7 @@ strategyController.show = function (req, res) {
             console.log('Error:', err);
         }
         else {
-            res.render('../views/strategies/show', { strategy: strategy });
+            res.render('./views/strategies/show.ejs', { strategy: strategy });
         }
     });
 };
