@@ -9,5 +9,6 @@ if (process.env.NODE_ENV == "production") {
 }
 
 
-module.exports.Place = require("./auth");
-module.exports.User = require("./passport");
+module.exports.Auth = require("./auth");
+module.exports.Passport = require("./passport");
+module.exports.User = require("../models/user");
