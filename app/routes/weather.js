@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router(); 
 
-let apiKey = '34d753ca8fe8fd4e7ccf04ee6f33e8ac'
+let apiKey = '34d753ca8fe8fd4e7ccf04ee6f33e8ac';
 let city = 'denver';
 let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
 
