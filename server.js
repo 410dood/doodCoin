@@ -81,9 +81,6 @@ if (process.env.MONGODB_URI) {
 	});
 }
 
-
-
-
 require('./app/config/passport')(passport); // pass passport for configuration
 
 // comment this stuff so you get it
@@ -105,9 +102,9 @@ app.use(passport.session());
 app.use(flash()); //use with session for social login i think
 
 
-require('./app/routes/index.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./app/routes/index.js')(app, passport); // l pass in passport
 
 app.listen(port);
-console.log('Working on port... ' + port);
+console.log('doodcoin working sorta on port... ' + port);
 
 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Strategy Detail</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <div class="container">
+        <h3>
+            <a href="/strategies">Strategy List</a>
+        </h3>
+        <h1>Strategy Detail</h1>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Username</td>
+                    <td>:</td>
+                    <td>
+                        <%= strategy.name %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Variables</td>
+                    <td>:</td>
+                    <td>
+                        <%= strategy.variables %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Currency</td>
+                    <td>:</td>
+                    <td>
+                        <%= strategy.currency %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Coin</td>
+                    <td>:</td>
+                    <td>$
+                        <%= strategy.coin %>/year</td>
+                </tr>
+                </tr>
+            </tbody>
+        </table>
+        <h3>
+            <a href="/strategies/edit/<%= strategy._id%>">EDIT</a>
+        </h3>
+        <form action="/strategies/delete/<%= strategy._id%>" method="post">
+            <button type="submit">DELETE</button>
+        </form>
+    </div>
+</body>
+
+</html>
