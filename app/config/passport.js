@@ -151,8 +151,6 @@ console.log(profile)
                         console.log(newUser.github.avatar);
                         console.log(profile.photos);
                         console.log(profile.photos.avatar_url);
-
-
                         newUser.github.public_repos = profile._json.public_repos;
                         newUser.github.public_gists = profile._json.public_gists;
                         newUser.github.followers = profile._json.followers;

@@ -54,32 +54,13 @@ var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
-
+var dotenv = require('dotenv');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
 var db = require('./app/config/database.js').default;
-var db = "mongodb://admin:admin@ds037395.mlab.com:37395/doodcoin"
-
-//mongoose.connect(db.url); 
-mongoose.Promise = global.Promise;
-
-
-if (process.env.MONGODB_URI) {
-	mongoose.connect(process.env.MONGODB_URI);
-
-} else {
-
-	mongoose.connect(db, function (err) {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log('mongoose connection is successful on: ' + db);
-		}
-	});
-}
 
 require('./app/config/passport')(passport); // pass passport for configuration
 
@@ -104,7 +85,7 @@ app.use(flash()); //use with session for social login i think
 
 require('./app/routes/index.js')(app, passport); // l pass in passport
 
-app.listen(port);
-console.log('doodcoin working sorta on port... ' + port);
 
-
+app.listen(app.get('port'), () => {
+	console.log(`✅ PORT: ${app.get('port')} 🌟`);
+});

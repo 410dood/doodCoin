@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Strategy</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <div class="container">
+        <h3>
+            <a href="/strategies">Strategies List</a>
+        </h3>
+        <h1>Edit Strategy</h1>
+        <form action="/strategies/update/<%= strategy._id%>" method="post">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td>
+                            <input type="text" name="name" value="<%= strategy.name %>" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Variables</td>
+                        <td>
+                            <textarea name="variables"><%= strategy.variables %></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Currency</td>
+                        <td>
+                            <input type="text" name="currency" value="<%= strategy.currency %>" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Coin</td>
+                        <td>
+                            <input type="number" name="coin" value="<%= strategy.coin %>" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button type="submit">Update</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>

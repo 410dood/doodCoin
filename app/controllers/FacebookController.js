@@ -71,7 +71,7 @@ module.exports = {
 					});
 
 				request.on('error', function(e) {
-					//console.log('error from facebook.getFbData: ' + e.message);
+					console.log('error from facebook.getFbData: ' + e.message);
 					return res.render('index.ejs');
 				});
 
