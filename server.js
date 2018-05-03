@@ -64,6 +64,8 @@ var db = require('./app/config/database.js').default;
 var db = "mongodb://admin:admin@ds037395.mlab.com:37395/doodcoin"
 
 //mongoose.connect(db.url); 
+mongoose.Promise = global.Promise;
+
 
 if (process.env.MONGODB_URI) {
 	mongoose.connect(process.env.MONGODB_URI);
