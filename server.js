@@ -104,9 +104,10 @@ app.use(passport.initialize());
 app.use(passport.session()); 
 app.use(flash()); //use with session for social login i think
 
+
 require('./app/routes/index.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 app.listen(port);
-console.log('See you at port ;) ' + port);
+console.log('Working on port... ' + port);
 
 
