@@ -9,7 +9,7 @@ module.exports = function (app, passport) {
     res.render('index.ejs'); 
   });
   app.get('/strategies', function (req, res) {
-    res.render('/strategies.ejs');
+    res.render('strategies.ejs');
   });
 
   app.get('/profile', isLoggedIn, function (req, res) {

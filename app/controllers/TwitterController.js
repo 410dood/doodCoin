@@ -2,7 +2,7 @@ var https = require('https');
 
 module.exports = {
 
-	get_follower_list_from_github: function (req, res) {
+	get_follower_list_from_twitter: function (req, res) {
 
 		var username = req.params.username;
 
@@ -14,7 +14,7 @@ module.exports = {
 			headers: { 'user-agent': 'node.js' }
 		};
 
-		var buffer = ''; //data received from facebook
+		var buffer = ''; //data received from twitter
 		var request = https.get(options, function (result) {
 			result.setEncoding('utf8');
 			result.on('data', function (chunk) {
