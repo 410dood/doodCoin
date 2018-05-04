@@ -48,7 +48,7 @@
 var express = require('express');
 var path = require('path');
 var app = express();
-var port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -57,35 +57,37 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-// var db = require('./app/config/database.js').default;
-// //var db = "mongodb://localhost/doodcoin";
-// var db = mongo.db(process.env.MONGOLAB_URI, {
-//   native_parser: true
-// });
-// mongoose.connect(db.url); 
-// // mongoose.Promise = global.Promise;
+//var db = require('./app/config/database.js');
+require('dotenv').load();
 
-    var mongoose = require("mongoose");
+console.log(process.env);
 
-    // Here we find an appropriate database to connect to, defaulting to
-    // localhost if we don't find one.
-    var uristring =
-      process.env.MONGOLAB_URI ||
-      process.env.MONGOHQ_URL ||
-      'mongodb://localhost/doodcoin';
+  if (process.env.NODE_ENV == "production") {
+    console.log("connecting to... " + process.env.NODE_ENV)
+    console.log("also connecting to mlab  " + process.env.MONGODB_URI)
+    mongoose.connect(process.env.MONGODB_URI)
+  } else {
+    console.log("this is the local server ")
+    mongoose.connect("mongodb://localhost/doodcoin");
+  };
 
 
-    // Makes connection asynchronously.  Mongoose will queue up database
-    // operations and release them when the connection is complete.
-    mongoose.connect(uristring, function (err, res) {
-      if (err) {
-        console.log('ERROR connecting to: ' + uristring + '. ' + err);
-      } else {
-        console.log('Succeeded connected to: ' + uristring);
-      }
-    });
+
+    // var db =
+    //   process.env.MONGOLAB_URI ||
+    //   process.env.MONGODB_URL ||
+    //   'mongodb://localhost/doodcoin';
 
 
+    // // Makes connection asynchronously.  Mongoose will queue up database
+    // // operations and release them when the connection is complete.
+    // mongoose.connect(db, function (err, res) {
+    //   if (err) {
+    //     console.log('ERROR connecting to: ' + db + '. ' + err);
+    //   } else {
+    //     console.log('Succeeded connected to: ' + db);
+    //   }
+    // });
 
 // if (process.env.MONGODB_URI) {
 // 	mongoose.connect(process.env.MONGODB_URI);
@@ -149,7 +151,9 @@ app.use(function (err, req, res, next) {
 	res.render('error');
 });
 
-app.listen(port);
-console.log('doodcoin working sorta on port... ' + port);
+
+app.listen(PORT, () => { 
+  console.log(`Server is listening on port ${PORT}`);
+});
 
 

@@ -8,7 +8,7 @@ module.exports = function (app, passport) {
   app.get('/', function (req, res) {
     res.render('index.ejs'); 
   });
-  app.get('/', function (req, res) {
+  app.get('/strategies', function (req, res) {
     res.render('/strategies.ejs');
   });
 

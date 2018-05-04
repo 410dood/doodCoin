@@ -12,7 +12,7 @@ if (process.env.NODE_ENV == 'production') {
   mongoose.connect(process.env.MLAB_URL);
 } else {
   console.log('this is the local server ');
-  mongoose.connect('mongodb://localhost/doodcoin');
+  mongoose.connect('mongodb://localhost/doodCoin');
 }
 
 //module.exports.User = require('./users').default;

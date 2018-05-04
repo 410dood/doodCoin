@@ -1,9 +1,14 @@
 console.log('strategyController page loaded')
-var mongoose = require("mongoose");
-var Strategy = require('../models/Strategy');
-var Strategy = mongoose.model('Strategy');
+const express = require("express");
+// const router = express.Router();
+// const db = require("../models");
 
-var strategyController = {};
+
+const mongoose = require("mongoose");
+const Strategy = require('../models/Strategy');
+const Strategy = mongoose.model('Strategy');
+
+const strategyController = {};
 
 // Show list of Strategies
 strategyController.list = function (req, res) {

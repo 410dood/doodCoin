@@ -1,10 +1,10 @@
 
-// module.exports = {
+// // module.exports = {
 
-//     'url': 'mongodb://localhost/doodCoin'
+// //     'url': 'mongodb://localhost/doodcoin'
 
-// };
-var mongoose = require("mongoose");
+// // };
+// var mongoose = require("mongoose");
 
 
 
@@ -20,8 +20,8 @@ if (process.env.NODE_ENV == "production") {
     }
 };
 
-module.exports.Auth = require("./auth");
-module.exports.Passport = require("./passport");
-module.exports.User = require("../models/user");
-module.exports.Strategy = require("../models/Strategy");
+// module.exports.Auth = require("./auth");
+// module.exports.Passport = require("./passport");
+// module.exports.User = require("../models/user");
+// module.exports.Strategy = require("../models/Strategy");
 
