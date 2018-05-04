@@ -1,4 +1,4 @@
-console.log('users.js page loaded');
+console.log('hitting routes/users.js');
 
 var express = require('express');
 var router = express.Router(); 

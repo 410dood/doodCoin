@@ -1,12 +1,11 @@
 console.log('strategyController page loaded')
 const express = require("express");
 // const router = express.Router();
-// const db = require("../models");
-
+ const db = require("../models");
 
 const mongoose = require("mongoose");
-const Strategy = require('../models/Strategy');
-const Strategy = mongoose.model('Strategy');
+const Strategy = require('../models/strategy');
+const strategy = mongoose.model('strategy');
 
 const strategyController = {};
 
@@ -17,7 +16,7 @@ strategyController.list = function (req, res) {
             console.log('Error:', err);
         }
         else {
-            res.render('../views/strategies/index', { strategies: strategies });
+            res.render('index.ejs', { strategies: strategies });
         }
     });
 };
@@ -31,14 +30,14 @@ strategyController.show = function (req, res) {
             console.log('Error:', err);
         }
         else {
-            res.render('./views/strategies/show.ejs', { strategy: strategy });
+            res.render('../views/strategies/show.ejs', { strategy: strategy });
         }
     });
 };
 
 // Create new strategy
 strategyController.create = function (req, res) {
-    res.render('../views/strategies/create');
+    res.render('...../views/strategies/create');
 };
 
 // Save new strategy

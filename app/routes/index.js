@@ -1,4 +1,6 @@
 // app/routes.js
+console.log('hitting routes/index.js');
+
 
 var FacebookController = require('../controllers/FacebookController.js');
 var GithubController = require('../controllers/GithubController.js');

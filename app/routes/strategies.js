@@ -1,8 +1,9 @@
-console.log('strategies.js page loaded');
+console.log('hitting route/strategies');
 
 var express = require('express');
 var router = express.Router();
-var strategy = require('../controllers/StrategyController.js');
+var strategy = require('../controllers/strategyController.js');
+
 
 // Get all strategies
 router.get('/', function (req, res) {

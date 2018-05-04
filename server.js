@@ -45,31 +45,56 @@
 // });
 
 
-var express = require('express');
-var path = require('path');
-var app = express();
-const PORT = process.env.PORT || 3000;
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash = require('connect-flash');
-var morgan = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const app = express();
+const morgan = require('morgan');
+const path = require('path');
+const port = process.env.PORT || 3000;
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash = require('connect-flash');
+const session = require('express-session');
+const db = require('./app/models');
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.set('port', process.env.PORT || 3000);
+
+// comment this stuff so you get it
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(bodyParser.json()); // get information from html forms
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(express.static('public'));
+app.use(session({
+  saveUninitialized: true,
+  resave: true,
+  secret: 'LambChop',
+  cookie: {
+    maxAge: 30 * 60 * 1000
+  },
+}));
+var index = require('./app/routes/index');
+var users = require('./app/routes/users');
+var strategies = require('./app/routes/strategies');
+
 
 //var db = require('./app/config/database.js');
-require('dotenv').load();
 
-console.log(process.env);
+// console.log(process.env);
 
-  if (process.env.NODE_ENV == "production") {
-    console.log("connecting to... " + process.env.NODE_ENV)
-    console.log("also connecting to mlab  " + process.env.MONGODB_URI)
-    mongoose.connect(process.env.MONGODB_URI)
-  } else {
-    console.log("this is the local server ")
-    mongoose.connect("mongodb://localhost/doodcoin");
-  };
+//   if (process.env.NODE_ENV == "production") {
+//     console.log("connecting to... " + process.env.NODE_ENV)
+//     console.log("also connecting to mlab  " + process.env.MONGODB_URI)
+//     mongoose.connect(process.env.MONGODB_URI)
+//   } else {
+//     console.log("this is the local server ")
+//     mongoose.connect("mongodb://localhost/doodcoin");
+//   };
 
 
 
@@ -79,8 +104,8 @@ console.log(process.env);
     //   'mongodb://localhost/doodcoin';
 
 
-    // // Makes connection asynchronously.  Mongoose will queue up database
-    // // operations and release them when the connection is complete.
+    // Makes connection asynchronously.  Mongoose will queue up database
+    // operations and release them when the connection is complete.
     // mongoose.connect(db, function (err, res) {
     //   if (err) {
     //     console.log('ERROR connecting to: ' + db + '. ' + err);
@@ -112,26 +137,18 @@ app.use('/view', express.static(process.cwd() + './views'));
 
 
 
-// comment this stuff so you get it
-app.use(morgan('dev')); // log every request to the console
-app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser.json()); // get information from html forms
-app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set('view engine', 'ejs'); 
-
-// have to have this for passport
-app.use(session({
-	secret: 'Lambchop', 
-	resave: true,
-	saveUninitialized: true
-}));
 app.use(passport.initialize());
 app.use(passport.session()); 
 app.use(flash()); //use with session for social login i think
 
 
 require('./app/routes/index.js')(app, passport); // l pass in passport
+
+/////neeed this/////
+app.use(require('./app/routes'));
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -152,8 +169,13 @@ app.use(function (err, req, res, next) {
 });
 
 
-app.listen(PORT, () => { 
-  console.log(`Server is listening on port ${PORT}`);
+// app.listen(PORT, () => { 
+//   console.log(`Server is listening on port ${PORT}`);
+// });
+
+app.listen(app.get('port'), () => {
+  console.log(`✅ PORT: ${app.get('port')} 🌟`);
 });
+
 
 
