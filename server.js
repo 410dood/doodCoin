@@ -52,31 +52,54 @@ var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
-
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-//var db = require('./app/config/database.js').default;
-var db = "mongodb://admin:admin@ds037395.mlab.com:37395/doodcoin";
-//mongoose.connect(db.url); 
-mongoose.Promise = global.Promise;
+// var db = require('./app/config/database.js').default;
+// //var db = "mongodb://localhost/doodcoin";
+// var db = mongo.db(process.env.MONGOLAB_URI, {
+//   native_parser: true
+// });
+// mongoose.connect(db.url); 
+// // mongoose.Promise = global.Promise;
+
+    var mongoose = require("mongoose");
+
+    // Here we find an appropriate database to connect to, defaulting to
+    // localhost if we don't find one.
+    var uristring =
+      process.env.MONGOLAB_URI ||
+      process.env.MONGOHQ_URL ||
+      'mongodb://localhost/doodcoin';
 
 
-if (process.env.MONGODB_URI) {
-	mongoose.connect(process.env.MONGODB_URI);
+    // Makes connection asynchronously.  Mongoose will queue up database
+    // operations and release them when the connection is complete.
+    mongoose.connect(uristring, function (err, res) {
+      if (err) {
+        console.log('ERROR connecting to: ' + uristring + '. ' + err);
+      } else {
+        console.log('Succeeded connected to: ' + uristring);
+      }
+    });
 
-} else {
 
-	mongoose.connect(db, function (err) {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log('mongoose connection is successful on: ' + db);
-		}
-	});
-}
+
+// if (process.env.MONGODB_URI) {
+// 	mongoose.connect(process.env.MONGODB_URI);
+
+// } else {
+
+// 	mongoose.connect(db, function (err) {
+// 		if (err) {
+// 			console.log(err);
+// 		} else {
+// 			console.log('mongoose connection is successful on: ' + db);
+// 		}
+// 	});
+// }
 
 require('./app/config/passport')(passport); // pass passport for configuration
 
