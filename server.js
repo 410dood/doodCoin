@@ -44,7 +44,6 @@
 // 	console.log('Node.js listening on port ' + port + '...');
 // });
 
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -66,21 +65,30 @@ app.set('port', process.env.PORT || 3000);
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true})); // get information from html forms
 app.use(express.static('public'));
-app.use(session({
-  saveUninitialized: true,
-  resave: true,
-  secret: 'LambChop',
-  cookie: {
-    maxAge: 30 * 60 * 1000
-  },
-}));
+app.use(session({saveUninitialized: true, resave: false, secret: 'LambChop', cookie: {maxAge: 3000},}));
+
 var index = require('./app/routes/index');
 var users = require('./app/routes/users');
 var strategies = require('./app/routes/strategies');
+
+require('./app/config/passport')(passport); // pass passport for configuration
+
+app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
+app.use('/public', express.static(process.cwd() + '/public'));
+app.use('/common', express.static(process.cwd() + '/app/common'));
+app.use('/view', express.static(process.cwd() + './views'));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash()); //use with session for social login i think
+
+require('./app/routes/index.js')(app, passport); // l pass in passport
+
+/////neeed this/////
+app.use(require('./app/routes'));
 
 
 //var db = require('./app/config/database.js');
@@ -128,27 +136,6 @@ var strategies = require('./app/routes/strategies');
 // 	});
 // }
 
-require('./app/config/passport')(passport); // pass passport for configuration
-
- app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
- app.use('/public', express.static(process.cwd() + '/public'));
- app.use('/common', express.static(process.cwd() + '/app/common'));
-app.use('/view', express.static(process.cwd() + './views'));
-
-
-
-
-app.use(passport.initialize());
-app.use(passport.session()); 
-app.use(flash()); //use with session for social login i think
-
-
-require('./app/routes/index.js')(app, passport); // l pass in passport
-
-/////neeed this/////
-app.use(require('./app/routes'));
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -167,11 +154,6 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
-
-
-// app.listen(PORT, () => { 
-//   console.log(`Server is listening on port ${PORT}`);
-// });
 
 app.listen(app.get('port'), () => {
   console.log(`✅ PORT: ${app.get('port')} 🌟`);
