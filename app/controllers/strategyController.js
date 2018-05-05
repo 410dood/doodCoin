@@ -1,4 +1,4 @@
-console.log('strategyController page loaded')
+console.log('strategyController page loaded');
 const express = require("express");
 // const router = express.Router();
  const db = require("../models");

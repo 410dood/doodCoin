@@ -127,7 +127,7 @@ module.exports = function (passport) {
 
 
             process.nextTick(function () {
-console.log(profile)
+console.log(profile);
                 User.findOne({
                     'github.id': profile.id
                 }, function (err, user) {
